@@ -1,0 +1,43 @@
+Using Events column:
+	Player involvements (number of times they're in the df)
+	Number of fouls committed/conceded by a player/team
+	Number of shots by Player/Team
+	Number of passes
+	Number of touches by a Player
+	Number of tackles, yellow cards, red cards, own goals, attempted dribbles and goals
+
+Using Time:
+	average match length
+	average time until __ (goal per example)
+	etc
+
+Using X,Y:
+	Display where some events occur
+	Display heatmaps
+	Display pass directions
+
+Using Possession:
+	Possession of every team in a match
+	Average possession in the season per team
+	
+Using Active Team:
+	Not useful thus far
+Using Transition:
+	Not useful thus far
+Using Player Transition:
+	Not useful thus far
+Using Goal Difference:
+	Can be replaced using data from Events
+Using Possession Number:
+	Not useful
+Using Move Number:
+	Not useful
+Using (Time/Last) counter attack / last direct play / last counter attack / last maintenance 	/ last build up / sustained threat / fast tempo / crossing / high press / possession 	start / shot / goal / offside / possession regain / possesion loss / disruption / move 	start:
+	Not useful, most can be deduced using Events
+Using BMP +/-:
+	we don't understand it
+Using xG (expected goals):
+	Average expected goals per team/player per game or season
+	
+Using wxG/ wgoal / distance forward ...:
+	We don't understand them or see them as useful

@@ -1,0 +1,15 @@
+Competition:
+	Not useful
+
+
+Minutes Played, Goals, xGoals generated, Possessions, Result, Score Team, Score Opposition:
+	Can be deduced from the events table but using them directly is more optimal.
+	Average Number of minutes played/per game
+	Total goals scored per game/season
+	xGoals per match/season
+	Number of touches per 90'
+
+Average X,Y:
+	Not useful
+
+*We didn't understand the other indicators

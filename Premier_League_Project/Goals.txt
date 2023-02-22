@@ -1,0 +1,39 @@
+Players: (Inspired by Onefootball)
+		Number of tackles per game and per season using events table (tackle) and player name (ex: Phil Jagaelka)		
+		Number of fouls commited
+		Number of Clearances
+		Number of Blocks
+		Number of Yellow/Red cards
+		Number of own goals
+		Number of fouls conceded
+	      Number of Passes
+		Number of Passes per 90'
+            Pourcentage of successful passes
+		Number of touches
+		Number of goals
+		Number of xG
+		Minutes/goal
+		Number of dribbles
+		Number of shots
+		Number of saves
+		Number of save catches
+		Number of Fumbles
+Using these statistics, we will implement all sorts of Graphs comparing players (ex: barplot of the top scorers etc)
+Our goal is to give the user the option to choose a team then choose a team and a match/season (nous allons créér une liste qui contient la liste des clubs et pour chaque club sa liste de joueurs), then search for every occurence of the player in the database and visualise every single statistic mentioned above.
+We hope to mainly use the Players dataset.
+
+Matches:
+	per match: C:\Users\user\Downloads\Capture web_31-1-2023_151214_www.google.com
+	
+	per season:
+		barplot of goals conceded/scored of every team
+		plot of goals conceded/scored for one club
+		barplot of Wins/Draws/Losses
+		plot of Wins/Draws/Losses for one club
+		League standings
+		barplot of yellow & red cards
+		pieplot of yellow & red cards
+		plot of fouls conceded/won
+		plot of shots, expected goals (xG) and goals scored
+	
+With the help of the Events folder, for one game, we use on file, for the season, we will use all files and calculate every stat.

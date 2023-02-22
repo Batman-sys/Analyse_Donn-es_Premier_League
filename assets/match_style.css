@@ -1,0 +1,101 @@
+
+body{
+    background-color:rgb(249, 249, 255);
+}
+.foreground {
+    box-shadow: 0 12px 40px rgb(0 0 0 / 0.8);
+    position: relative;
+    background-color: white;
+    z-index: -1;
+    min-width: 700px;
+    max-width: 900px;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 15px;
+    border-radius: 25px;
+    border: 2px solid #73AD21;
+}
+ h3 {
+    color: rebeccapurple;
+    z-index: 3;
+}
+.teams {
+    position: relative;
+    top : -50px;
+    left: -22px;
+    margin: auto;
+    z-index: 4;
+    min-height: 60px;
+    width: 450px;
+}
+
+.crest {
+    float:left;
+    margin-left:100px;
+}
+
+.Pies {
+    position: relative;
+    top: -500px;
+    left: -170px;
+    margin: auto;
+    z-index: 1;
+    height: 275px;
+    width: 275px;
+}
+#pie_possession1, #pie_possession2 {
+    position: absolute;
+    height: 275px;
+    width: 275px;
+}
+#pie_possession2 {
+    left: 130%;
+}
+ 
+.shot_bar, .goal_bar, .pass_bar, .foul_bar {
+    position: relative;
+    left: 31%;
+    z-index: 3;
+    border-radius: 50px
+}
+.shot_bar {
+    top: -520px;
+}
+.goal_bar {
+    top: -712px;
+}
+.pass_bar {
+    top: -425px;
+}
+.foul_bar {
+    top: -330px;
+}
+.shot_bar>*, .goal_bar > *, .pass_bar > *, .foul_bar > * {
+    position: absolute;
+    height: 5px;
+    z-index: 3;
+    border-radius: 50px
+
+}
+#shot2_progress, #goal2_progress, #foul2_progress, #pass2_progress {
+    z-index: 2;
+}
+
+.goal_bar > * {
+    top: 35%;
+}
+
+.pass_bar > * {
+    top: 71%;
+}
+
+.foul_bar > * {
+    top: 83%;
+}
+
+.time {
+    position: relative;
+    top: -60px;
+    color:cadetblue;
+}
