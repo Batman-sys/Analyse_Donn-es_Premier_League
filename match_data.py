@@ -4,10 +4,10 @@ import os
 import plotly.express as px
 import matplotlib.pyplot as plt
 import seaborn as sns
-#import seaborn as sb
+import seaborn as sb
 from pathlib import Path
-#from pandas import *
-#from matplotlib.patches import Arc
+from pandas import *
+from matplotlib.patches import Arc
 
 
 def importing_events(team1, team2):
