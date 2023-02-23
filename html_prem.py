@@ -25,13 +25,16 @@ Goals = "0      Goals       0"
 Shots = "0      Shots       0"
 Passes = "0      Passes       0"
 Fouls = "0      Fouls       0"
+Reds = "0      Red Cards       0"
 names_crests =  pd.read_csv('.\\teams.csv')
 team_list = pd.read_csv('.\\teams.csv')['Team A'].values.tolist()
 crest = pd.read_csv('.\\teams.csv')['crest'].values.tolist()
 df = pd.DataFrame()
 
 app.layout = html.Div(className = "Mother_div",children=[
+    html.Img(id = 'prem_logo', src='https://seeklogo.com/images/P/premier-league-new-logo-D22A0CE87E-seeklogo.com.png'),
     html.H1("Match Statistics", style = {'text-align': 'center'}),
+    
     html.Br(),
     html.Div(className="row", children=[
             html.Div(className='six columns', children=[
@@ -53,9 +56,7 @@ app.layout = html.Div(className = "Mother_div",children=[
         html.Img(id = 'crest2', className = 'crest', src=crest[1]),
     ]),
     html.Div(className = "Stats", children = [
-        html.H3(Goals, id = 'Goals',  style = {'text-align': 'center'}),
-
-        
+        html.H3("0 Goals 0", id = 'Goals',  style = {'text-align': 'center'}),
 
         html.Br(),
         html.Br(),
@@ -64,17 +65,36 @@ app.layout = html.Div(className = "Mother_div",children=[
         html.Br(),
         html.Br(),
 
-        html.H3(Shots, id = 'Shots',  style = {'text-align': 'center'}),
+        html.H3('0 Shots 0', id = 'Shots',  style = {'text-align': 'center'}),
         html.Br(),
         html.Br(),
 
-        html.H3(Passes, id = 'Passes',  style = {'text-align': 'center'}),
+        html.H3('0 Passes 0', id = 'Passes',  style = {'text-align': 'center'}),
         html.Br(),
         html.Br(),
 
-        html.H3(Fouls, id = 'Fouls',  style = {'text-align': 'center'}),
+        html.H3('0 Fouls 0', id = 'Fouls',  style = {'text-align': 'center'}),
         html.Br(),
         html.Br(),
+
+        html.H3('0 Reds 0', id = 'Reds',  style = {'text-align': 'center'}),
+        html.Br(),
+        html.Br(),
+                
+        html.H3('0 Yellows 0', id = 'Yellows',  style = {'text-align': 'center'}),
+        html.Br(),
+        html.Br(),
+
+                        
+        html.H3('0 Offsides 0', id = 'Offsides',  style = {'text-align': 'center'}),
+        html.Br(),
+        html.Br(),
+
+                        
+        html.H3('0 Corners 0', id = 'Corners',  style = {'text-align': 'center'}),
+        html.Br(),
+        html.Br(),
+
 
 
     ], style=dict(display='grid')),
@@ -110,8 +130,28 @@ app.layout = html.Div(className = "Mother_div",children=[
    html.Div(className = 'shot_bar', children=[
     dbc.Progress(id = 'shot1_progress', value = 20, color = 'blue' , bar = True),
     dbc.Progress(id = 'shot2_progress', value = 40, color = 'red', bar = True)
-   ]
-   ) ]),
+   ]),
+
+   html.Div(className = 'reds_bar', children=[
+    dbc.Progress(id = 'red1_progress', value = 20, color = 'blue' , bar = True),
+    dbc.Progress(id = 'red2_progress', value = 40, color = 'red', bar = True)
+   ]),
+
+   html.Div(className = 'yellows_bar', children=[
+    dbc.Progress(id = 'yellow1_progress', value = 20, color = 'blue' , bar = True),
+    dbc.Progress(id = 'yellow2_progress', value = 40, color = 'red', bar = True)
+   ]),
+
+   html.Div(className = 'offsides_bar', children=[
+    dbc.Progress(id = 'offside1_progress', value = 20, color = 'blue' , bar = True),
+    dbc.Progress(id = 'offside2_progress', value = 40, color = 'red', bar = True)
+   ]),
+
+   html.Div(className = 'corners_bar', children=[
+    dbc.Progress(id = 'corner1_progress', value = 20, color = 'blue' , bar = True),
+    dbc.Progress(id = 'corner2_progress', value = 40, color = 'red', bar = True)
+   ])
+    ]),
    html.Div(className = "Stats", children = [
             (dcc.Graph(id = 'offensiveness', figure = {},  style={'display': 'inline-block'}))
             
@@ -145,22 +185,38 @@ def update_output(team1, team2):
     Output('Shots', 'children'),
     Output('Passes', 'children'),
     Output('Fouls', 'children'),
+    Output('Reds', 'children'),
+    Output('Yellows', 'children'),
+    Output('Offsides', 'children'),
+    Output('Corners', 'children'),
     Output('pie_possession1', 'figure'),
     Output('pie_possession2', 'figure'),
     Output('shot1_progress','value'),
     Output('goal1_progress','value'),
     Output('pass1_progress','value'),
     Output('foul1_progress','value'),
+    Output('red1_progress','value'),
+    Output('yellow1_progress','value'),
+    Output('offside1_progress','value'),
+    Output('corner1_progress','value'),
 
     Output('goal1_progress','color'),
     Output('shot1_progress','color'),
     Output('pass1_progress','color'),
     Output('foul1_progress','color'),
+    Output('red1_progress','color'),
+    Output('yellow1_progress','color'),
+    Output('offside1_progress','color'),
+    Output('corner1_progress','color'),
 
     Output('goal2_progress','color'),
     Output('shot2_progress','color'),
     Output('pass2_progress','color'),
-    Output('foul2_progress','color')]
+    Output('foul2_progress','color'),
+    Output('red2_progress','color'),
+    Output('yellow2_progress','color'),
+    Output('offside2_progress','color'),
+    Output('corner2_progress','color')]
     ,
     [Input('team1', 'value'),
      Input('team2', 'value'),
@@ -175,7 +231,7 @@ def update_output(team1, team2, minute):
     lbars = bars(stats)
     crest1 = names_crests[(names_crests['Team A'] == team1)]['crest']
     crest2 = names_crests[(names_crests['Team A'] == team2)]['crest']
-    return str(minute) + "'", *crest1,*crest2, *stats[1:], *pie_poss_teams, *lbars
+    return str(minute) + "'", *crest1, *crest2, *stats[1:], *pie_poss_teams, *lbars
 
 #Offensiveness Graph
 @app.callback(

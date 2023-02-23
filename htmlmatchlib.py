@@ -21,7 +21,12 @@ def statistics(team1, team2, minute):
     Shots = str(stats[2]) + "  Shots  " + str(stats[3])
     Passes = str(stats[8]) + "  Passes  " + str(stats[9])
     Fouls = str(stats[10]) + "  Fouls  " + str(stats[11])
-    return stats, Goals, Shots, Passes, Fouls
+
+    reds = str(stats[4]) + "  Reds  " + str(stats[5])
+    yellows = str(stats[6]) + "  Yellows  " + str(stats[7])
+    offsides = str(stats[12]) + "  Offsides  " + str(stats[13])
+    corners = str(stats[14]) + "  Corners  " + str(stats[15])
+    return stats, Goals, Shots, Passes, Fouls, reds, yellows, offsides, corners
 
 def pie_poss(stats):
     
@@ -46,6 +51,7 @@ def pie_poss(stats):
                     hole=.5,
                     textinfo='none',
                     marker_colors=['rgb(240, 240, 240)', 'rgb(250, 100, 10)'],
+                    
                 )
             ],
             layout=go.Layout(
@@ -53,37 +59,61 @@ def pie_poss(stats):
                 showlegend=False
             )
         )
+    
+    pie_poss_team1.layout.paper_bgcolor = 'rgb(221, 216, 216)'
+    pie_poss_team2.layout.paper_bgcolor = 'rgb(221, 216, 216)'
     return pie_poss_team1, pie_poss_team2
     
 def bars(stats):
-    colors = 4 * ['gray', 'gray']
+    colors = 8 * ['gray', 'gray']
     all_shots = int(stats[0][2]) + int(stats[0][3])
     all_goals = int(stats[0][0]) + int(stats[0][1])
     all_passes = int(stats[0][8]) + int(stats[0][9])
     all_fouls = int(stats[0][10]) + int(stats[0][11])
+    all_reds = int(stats[0][4]) + int(stats[0][5])
+    all_yellows = int(stats[0][6]) + int(stats[0][7])
+    all_offsides = int(stats[0][12]) + int(stats[0][13])
+    all_corners = int(stats[0][14]) + int(stats[0][15])
+    
     if all_shots != 0:
         all_shots = int(stats[0][2]) * 40 / all_shots
         colors[1] = 'blue'
-        colors[5] = 'rgb(250, 100, 10)'
-    else:
-        all_shots = 20
+        colors[9] = 'rgb(250, 100, 10)'
+    
     if all_goals != 0:
         all_goals = int(stats[0][0]) * 40 / all_goals
         colors[0] = 'blue'
-        colors[4] = 'rgb(250, 100, 10)'
-    else:
-        all_goals = 20
+        colors[8] = 'rgb(250, 100, 10)'
+
     if all_passes != 0:
         all_passes = int(stats[0][8]) * 40 / all_passes
         colors[2] = 'blue'
-        colors[6] = 'rgb(250, 100, 10)'
-    else:
-        all_passes = 20
+        colors[10] = 'rgb(250, 100, 10)'
+
     if all_fouls != 0:
         all_fouls = int(stats[0][10]) * 40 / all_fouls
         colors[3] = 'blue'
-        colors[7] = 'rgb(250, 100, 10)'
-    else:
-        all_fouls = 20
+        colors[11] = 'rgb(250, 100, 10)'
+    
+    if all_reds != 0:
+        all_reds = int(stats[0][4]) * 40 / all_reds
+        colors[4] = 'blue'
+        colors[12] = 'rgb(250, 100, 10)'
+    
+    if all_yellows != 0:
+        all_yellows = int(stats[0][6]) * 40 / all_yellows
+        colors[5] = 'blue'
+        colors[13] = 'rgb(250, 100, 10)'
 
-    return all_shots, all_goals, all_passes, all_fouls, *colors
+    if all_offsides != 0:
+        all_offsides = int(stats[0][12]) * 40 / all_offsides
+        colors[6] = 'blue'
+        colors[14] = 'rgb(250, 100, 10)'
+
+    if all_corners != 0:
+        all_corners = int(stats[0][14]) * 40 / all_corners
+        colors[7] = 'blue'
+        colors[15] = 'rgb(250, 100, 10)'
+        
+
+    return all_shots, all_goals, all_passes, all_fouls, all_reds, all_yellows, all_offsides, all_corners, *colors
