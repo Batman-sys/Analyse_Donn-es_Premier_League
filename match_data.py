@@ -31,6 +31,10 @@ def importing_events(team1, team2):
 
 
 
+# "Player Transition", "Goal Difference","Possession Number", "Move Number", "xG Score" 
+
+
+
 
 #-------------------------------------
 # à modifier, tout faire en une fonction.
