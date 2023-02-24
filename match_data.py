@@ -33,6 +33,7 @@ def importing_events(team1, team2):
 
 
 #-------------------------------------
+# à modifier, tout faire en une fonction.
 def Nb_Pass_succ(team):    
     a = 0
     for (i,j,k) in zip(df["Event Name"], df["Player1 Team"], df["Player1 Team"][1::] ):
