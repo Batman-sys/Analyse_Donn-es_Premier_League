@@ -47,10 +47,21 @@ def xG_Score(team1,team2):
     
     df = importing_events(team1, team2)
     
-    lteam1 = df[df["Player1 Team"] == team1][['Offensiveness']].values
-    lteam2 = df[df["Player1 Team"] == team2][['Offensiveness']].values
+    x1 = df[df["Player1 Team"] == team1][["Time"]].values
+    y1 = df[df["Player1 Team"] == team1][["xG Score"]].values
+    df1 = df[df["Player1 Team"] == team1]
     
-    return lteam1, lteam2
+    x2 = df[df["Player1 Team"] == team2][["Time"]].values
+    y2 = df[df["Player1 Team"] == team2][["xG Score"]].values
+    df2 = df[df["Player1 Team"] == team2]
+    
+    fig = px.line(df1, x = "Time", y = "xG Score", title=team1)
+    fig2 = px.line(df2, x = "Time", y = "xG Score", title=team2)
+
+    fig.show()
+    fig2.show()
+
+
 
 
 #-------------------------------------
@@ -81,15 +92,23 @@ def Pass(team):
 
 
 #-------------------------------------
-def offensiveness(Team1, Team2):
-  df = importing_events(Team1, Team2)
+def Offensiveness(team1,team2):
+    
+    df = importing_events(team1, team2)
+    
+    x1 = df[df["Player1 Team"] == team1][["Time"]].values
+    y1 = df[df["Player1 Team"] == team1][["Offensiveness"]].values
+    df1 = df[df["Player1 Team"] == team1]
+    
+    x2 = df[df["Player1 Team"] == team2][["Time"]].values
+    y2 = df[df["Player1 Team"] == team2][["Offensiveness"]].values
+    df2 = df[df["Player1 Team"] == team2]
+    
+    fig = px.line(df1, x = "Time", y = "Offensiveness", title=team1)
+    fig2 = px.line(df2, x = "Time", y = "Offensiveness", title=team2)
 
-  #offensive_team1 = len(df[ (df["Time"] < minutes) & ((df["Offensiveness"] != 0) & (df["Player1 Team"] == Team1)) ] )
-  #offensive_team2 = len(df[ (df["Time"] < minutes) & (df["Event Name"].str.contains("Shot") ) & (df["Player1 Team"] == Team2 )])
-  lteam1 = df[df["Player1 Team"] == Team1][['Player1 Team', 'Offensiveness']]
-  lteam2 = df[df["Player1 Team"] == Team2][['Player1 Team', 'Offensiveness']]
-
-  return lteam1, lteam2
+    fig.show()
+    fig2.show()
 
 
 
