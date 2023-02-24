@@ -33,6 +33,13 @@ def importing_events(team1, team2):
 
 # "Player Transition", "Goal Difference","Possession Number", "Move Number"
 
+# Tirs Cadrés :
+# df["Event Name"] == shot et ( event suivant ) : goal, Goalkeeper Catch, Goalkeeper Save
+# (Direct Free Kick Shot et event suivant arret, goal), Goalkeeper Save Catch, Goalkeeper Pick Up
+# (Header Shot et event suivant arret, goal ), Goalkeeper Punch ...
+
+# Positions moyenne des Joueurs durant le match
+
 
 
 #-------------------------------------
