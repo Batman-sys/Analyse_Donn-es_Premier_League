@@ -301,14 +301,21 @@ def Zones_des_tirs(team1, team2, minutes):
 #-------------------------------------
 def Zones_actions(team1, team2, minutes):
     df = importing_events(team1, team2)
-    total = len(df)
+    total = len(df[(df["Time"] < minutes)])
     Tiers_gauche = len(df[ ( ( df["Player1 Team"] == team1 ) | ( df["Player1 Team"] == team2 ) ) & (df["Time"] < minutes) & (df["X"] <= -18.4) ])
     Tiers_gauche = (Tiers_gauche / total) * 100
     Milieu = len(df[ ( ( df["Player1 Team"] == team1 ) | ( df["Player1 Team"] == team2 ) ) & (df["Time"] < minutes) & (df["X"] >= -18.4) & (df["X"] <= 18.4) ])
     Milieu = (Milieu / total) * 100
     Tiers_droit = len(df[ ( ( df["Player1 Team"] == team1 ) | ( df["Player1 Team"] == team2 ) ) & (df["Time"] < minutes) & (df["X"] >= 18.4) ])
     Tiers_droit = (Tiers_droit / total) * 100
-    return ( str(round(Tiers_gauche)) + " %",str(round(Milieu)) + "%", str(round(Tiers_droit)) + "%" )
+    
+    fig = go.Figure(
+    data = [go.Bar(x=["Tiers_gauche","Milieu","Tiers_droit"],y=[ Tiers_gauche, Milieu, Tiers_droit])],
+    layout_title_text="Zones d'actions du match:   " + team1 + " vs " + team2
+     )
+    fig.show()
+    
+    #return ( str(round(Tiers_gauche)) + " %",str(round(Milieu)) + "%", str(round(Tiers_droit)) + "%" )
     
 
 
