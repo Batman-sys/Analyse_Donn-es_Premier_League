@@ -33,32 +33,27 @@ def importing_events(team1, team2):
 
 
 #-------------------------------------
-def Nb_Pass_succ(team, df):
-  a = 0
-  for (i, j, k) in zip(df["Event Name"], df["Player1 Team"],
-                       df["Player1 Team"][1::]):
+def Nb_Pass_succ(team):    
+    a = 0
+    for (i,j,k) in zip(df["Event Name"], df["Player1 Team"], df["Player1 Team"][1::] ):
+        
+        if ( i == "Pass" ) & ( j == team) & ( k == team ):
+            a += 1
+    return a
 
-    if (i == "Pass") & (j == team) & (k == team):
-      a += 1
-  return a
+def Nb_Pass_miss(team):    
+    a = 0
+    for (i,j,k) in zip(df["Event Name"], df["Player1 Team"], df["Player1 Team"][1::] ):
+        
+        if ( i == "Pass" ) & ( j == team) & ( k != team ):
+            a += 1
+    return a
 
-
-def Nb_Pass_miss(team, df):
-  a = 0
-  for (i, j, k) in zip(df["Event Name"], df["Player1 Team"],
-                       df["Player1 Team"][1::]):
-
-    if (i == "Pass") & (j == team) & (k != team):
-      a += 1
-  return a
-
-
-def Pass(team, df):
-  Nb_Pass = len(df[(df["Event Name"] == "Pass")
-                   & (df["Player1 Team"] == team)])
-  b = Nb_Pass_succ(team)
-  c = Nb_Pass_miss(team)
-  return Nb_Pass, b, c
+def Pass(team):
+    Nb_Pass = len(df[ (df["Event Name"]=="Pass") & (df["Player1 Team"]== team)])
+    NbPass_succ = Nb_Pass_succ(team)
+    NbPass_miss = Nb_Pass_miss(team)
+    return Nb_Pass, NbPass_succ, NbPass_miss
 
 
 
@@ -77,6 +72,7 @@ def offensiveness(Team1, Team2):
 
 
 #-------------------------------------
+# à modifier pour afficher la heatmap des 2 équipes simultanément.
 def heatmap(team, minutes):
     
     #Create figure
