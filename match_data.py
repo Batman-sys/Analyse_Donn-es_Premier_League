@@ -31,9 +31,19 @@ def importing_events(team1, team2):
 
 
 
-# "Player Transition", "Goal Difference","Possession Number", "Move Number", "xG Score" 
+# "Player Transition", "Goal Difference","Possession Number", "Move Number"
 
 
+
+#-------------------------------------
+def xG_Score(team1,team2):
+    
+    df = importing_events(team1, team2)
+    
+    lteam1 = df[df["Player1 Team"] == team1][['Offensiveness']].values
+    lteam2 = df[df["Player1 Team"] == team2][['Offensiveness']].values
+    
+    return lteam1, lteam2
 
 
 #-------------------------------------
