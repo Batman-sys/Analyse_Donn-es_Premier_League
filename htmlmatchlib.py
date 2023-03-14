@@ -12,7 +12,7 @@ from dash import html
 from dash.dependencies import Input, Output 
 from dash import Dash, dash_table
 import pandas as pd
-from Proj import *
+from match_data import *
 
 
 def statistics(team1, team2, minute):
@@ -21,7 +21,6 @@ def statistics(team1, team2, minute):
     Shots = str(stats[2]) + "  Shots  " + str(stats[3])
     Passes = str(stats[8]) + "  Passes  " + str(stats[9])
     Fouls = str(stats[10]) + "  Fouls  " + str(stats[11])
-
     reds = str(stats[4]) + "  Reds  " + str(stats[5])
     yellows = str(stats[6]) + "  Yellows  " + str(stats[7])
     offsides = str(stats[12]) + "  Offsides  " + str(stats[13])
@@ -29,7 +28,6 @@ def statistics(team1, team2, minute):
     return stats, Goals, Shots, Passes, Fouls, reds, yellows, offsides, corners
 
 def pie_poss(stats):
-    
     pie_poss_team1 = go.Figure(
             data=[
                 go.Pie(
