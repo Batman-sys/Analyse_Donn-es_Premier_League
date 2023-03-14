@@ -21,9 +21,11 @@ def stats_div():
             ]),
             html.Br(),
             html.Br(),
-
+            html.Div(id= 'Possession', children=[
+            dcc.Graph(id = 'pie_possession1', figure = {}),
             html.H3('Possession',  style = {'text-align': 'center'}),
-            
+            dcc.Graph(id = 'pie_possession2', figure = {}),
+            ]),
             html.Br(),
             html.Br(),
 
@@ -89,10 +91,6 @@ def stats_div():
 
         
 
-        html.Div(className = "Pies", children = [
-            dcc.Graph(id = 'pie_possession1', figure = {}),
-            dcc.Graph(id = 'pie_possession2', figure = {}),
-            ]),
         
         
         
