@@ -135,6 +135,8 @@ def match_stats(Team1, Team2, minutes):
   return goal_team1, goal_team2, shot_team1, shot_team2, redCard_team1, redCard_team2, yellowCard_team1, yellowCard_team2, pass_team1, pass_team2, foul_team1, foul_team2, offSide_team1, offSide_team2, corners_team1, corners_team2, possession_team1, possession_team2
 
 
+# partie du terrain correspondant à l'équipe adverse découpé en 3 parties ( sur la longueur )
+
 def côtés_Utilisés(team1, team2, minutes):
     df = importing_events(team1, team2)
     total1 = len(df[ ( df["Player1 Team"] == team1 ) & (df["Time"] < minutes) & (df["X"] > 0) ])
@@ -162,6 +164,8 @@ def côtés_Utilisés(team1, team2, minutes):
             
             
             
+# partie du terrain correspondant à l'équipe adverse découpé en 3 parties ( sur la longueur )
+            
 def Directions_des_tirs(team1, team2, minutes):
     df = importing_events(team1, team2)
     total1 = len(df[ ( df["Player1 Team"] == team1 ) & (df["Time"] < minutes) & (df["X"] > 0) & ((df["Event Name"] == "Shot") | (df["Event Name"] == "Direct Free Kick Cross"))])
@@ -185,7 +189,8 @@ def Directions_des_tirs(team1, team2, minutes):
     return (Côté_Gauche1, Milieu, Côté_Droit1), (Côté_Gauche2, Milieu2, Côté_Droit2)
     
     
-    
+
+# partie du terrain correspondant à l'équipe adverse 
     
 def Zones_des_tirs(team1, team2, minutes):
     df = importing_events(team1, team2)
@@ -208,7 +213,8 @@ def Zones_des_tirs(team1, team2, minutes):
     
     
     
-    
+# partie du terrain découpé en 3 parties (largeur) : Tiers_gauche, Milieu, Tiers_droit
+
 def Zones_actions(team1, team2, minutes):
     df = importing_events(team1, team2)
     total = len(df[(df["Time"] < minutes)])
