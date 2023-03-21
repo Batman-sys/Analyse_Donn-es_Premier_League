@@ -14,22 +14,23 @@ from dash.dependencies import Input, Output
 from dash import Dash, dash_table
 import pandas as pd
 
-dash.register_page(__name__)
+dash.register_page(__name__, path='/Players')
 
 
 names_crests =  pd.read_csv('./teams.csv')
-team_list = pd.read_csv('./teams.csv')['Team A'].values.tolist()
+team_list = names_crests['Team A'].values.tolist()
 crest = pd.read_csv('./teams.csv')['crest'].values.tolist()
 
 
-layout = html.Div([
-	html.H1('Multi-page app with Dash Pages'),
+layout = html.Div(className= "Mother_Div",children= [
+	html.H1('Player Statss',style = {'text-align': 'center'}),
 
-    html.Div(
-        [
-            html.Div(
-            )
-        ]
-    ),
+    html.Br(),
+    html.Div(className="row", children=[
+            html.Div(className='six columns', children=[
+                dcc.Dropdown(options = [], value = team_list[0], id='team1')], style=dict(width='50%'))
+            , html.Div(className='six columns', children=[
+                dcc.Dropdown(options = [], value = team_list[1], id='team2')], style=dict(width='50%'))
+        ]),
 
 ])
