@@ -5,6 +5,7 @@ import dash
 app = Dash(__name__, use_pages=True)
 
 app.layout = html.Div([
+	
 
     html.Nav(className= 'topnav', children = 
         [
@@ -14,8 +15,11 @@ app.layout = html.Div([
                 
         ]
     ),
+        html.Img(id = 'prem_logo', src='https://seeklogo.com/images/P/premier-league-new-logo-D22A0CE87E-seeklogo.com.png'),
 
-	dash.page_container
+    dash.page_container,
+ 
+	
 ])
 
 if __name__ == '__main__':

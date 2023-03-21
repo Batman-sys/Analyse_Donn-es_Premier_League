@@ -2,18 +2,21 @@ import dash
 from dash import html, dcc
 import dash_bootstrap_components as dbc
 import pandas as pd
+import plotly.express as px
+from plotly.subplots import make_subplots
+import plotly.graph_objects as go
+import base64
 
 
 crest = pd.read_csv('./teams.csv')['crest'].values.tolist()
 def stats_div():
-    return html.Div(className = 'foreground', children = [
-        html.Div(className = 'time', children = html.H6('',id = 'minute', style = {'text-align': 'center'})),
+    return[ html.Div(className = 'time', children = html.H6('',id = 'minute', style = {'text-align': 'center'})),
         html.Div(className='teams', children=[
             html.Img(id='crest1', className = 'crest',src=crest[0]),
             html.H3(" - ", className = 'crest',  style = {'text-align': 'center'}),
             html.Img(id = 'crest2', className = 'crest', src=crest[1]),
         ]),
-        html.Div(className = "Stats", children = [
+        html.Div(className = "Stats", id="Stats", children = [
             html.H3("0 Goals 0", id = 'Goals',  style = {'text-align': 'center'}),
             html.Div(className = 'goal_bar',id = 'goal_bar', children=[
             dbc.Progress(id = 'goal1_progress', value = 20, color = 'blue' , bar = True),
@@ -108,4 +111,15 @@ def stats_div():
     
     ], style=dict(display='grid'))
     
-        ])
+        ]
+def graphs():
+    
+
+    
+    return [html.Div([dcc.Graph(id = 'team1_ball_poss', figure = {},  style={'display': 'inline-block'})], style={'textAlign': 'center'}),
+            html.Div([dcc.Graph(id = 'team2_ball_poss', figure = {},  style={'display': 'inline-block'})], style={'textAlign': 'center'}),
+            html.Div([dcc.Graph(id = 'team1_pass_directions', figure = {},  style={'display': 'inline-block'})], style={'textAlign': 'center'}),
+            html.Div([dcc.Graph(id = 'team2_pass_directions', figure = {},  style={'display': 'inline-block'})], style={'textAlign': 'center'}),
+            html.Div([dcc.Graph(id = 'team1_attacks', figure = {},  style={'display': 'inline-block'})], style={'textAlign': 'center'}),
+            html.Div([dcc.Graph(id = 'team2_attacks', figure = {},  style={'display': 'inline-block'})], style={'textAlign': 'center'}),
+    ]

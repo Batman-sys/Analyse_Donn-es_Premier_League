@@ -58,8 +58,8 @@ def pie_poss(stats):
             )
         )
     
-    pie_poss_team1.layout.paper_bgcolor = 'rgb(221, 216, 216)'
-    pie_poss_team2.layout.paper_bgcolor = 'rgb(221, 216, 216)'
+    pie_poss_team1.layout.paper_bgcolor = 'rgb(255, 255, 255)'
+    pie_poss_team2.layout.paper_bgcolor = 'rgb(255, 255, 255)'
     return pie_poss_team1, pie_poss_team2
     
 def bars(stats):
