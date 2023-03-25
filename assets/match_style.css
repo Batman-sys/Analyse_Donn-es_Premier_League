@@ -148,3 +148,10 @@ body{
     display: table;
     clear: both;
 }
+
+
+/* Players */
+.player_photo {
+    width: 150px;
+    height: 200px;
+}
