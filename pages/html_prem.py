@@ -176,7 +176,6 @@ def update_output(team1, team2, minute):
         team_pos = df[(df['Time'] <= minute) & (df['Player1 Team'] == team1)]
         x=team_pos['X'].values.tolist()
         y=team_pos['Y'].values
-        print(x)
         fig = go.Figure(data=[])
         pitch = base64.b64encode(open('pitch.jpg', 'rb').read())
         fig.add_trace(go.Scatter(x = x, y = y, mode='markers', marker_color = 'blue' ))
@@ -184,9 +183,9 @@ def update_output(team1, team2, minute):
                             xref= "x",
                             yref= "y",
                             x=-55,
-                            y=45,
+                            y=40,
                             sizex=55 * 2,
-                            sizey=45 * 2,
+                            sizey=40 * 2,
                             sizing= "stretch",
                             opacity= 1,
                             layer= "below"))
@@ -199,7 +198,7 @@ def update_output(team1, team2, minute):
             ),
             xaxis = dict(showgrid=False), 
             yaxis = dict(showgrid = False), 
-            yaxis_range=[-45,45], 
+            yaxis_range=[-40,40], 
             xaxis_range=[-55, 55]
         )
 
@@ -233,9 +232,9 @@ def update_output(team1, team2, minute):
                             xref= "x",
                             yref= "y",
                             x=-55,
-                            y=45,
+                            y=40,
                             sizex=55 * 2,
-                            sizey=45 * 2,
+                            sizey=40 * 2,
                             sizing= "stretch",
                             opacity= 1,
                             layer= "below"))
@@ -248,12 +247,10 @@ def update_output(team1, team2, minute):
             ),
             xaxis = dict(showgrid=False), 
             yaxis = dict(showgrid = False), 
-            yaxis_range=[-45,45], 
+            yaxis_range=[-40,40], 
             xaxis_range=[-55, 55]
         )
 
-
-        fig.update_layout(yaxis_range=[-45,45], xaxis_range=[-55, 55])
         return fig
 
 
