@@ -152,6 +152,6 @@ body{
 
 /* Players */
 .player_photo {
-    width: 150px;
+    max-width: 450px;
     height: 200px;
 }
