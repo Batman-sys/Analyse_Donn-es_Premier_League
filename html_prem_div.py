@@ -118,8 +118,8 @@ def graphs():
     
     return [html.Div([dcc.Graph(id = 'team1_ball_poss', figure = {},  style={'display': 'inline-block'})], style={'textAlign': 'center'}),
             html.Div([dcc.Graph(id = 'team2_ball_poss', figure = {},  style={'display': 'inline-block'})], style={'textAlign': 'center'}),
-            html.Div([dcc.Graph(id = 'team1_pass_directions', figure = {},  style={'display': 'inline-block'})], style={'textAlign': 'center'}),
-            html.Div([dcc.Graph(id = 'team2_pass_directions', figure = {},  style={'display': 'inline-block'})], style={'textAlign': 'center'}),
+            html.Div([dcc.Graph(id = 'team1_touches', figure = {},  style={'display': 'inline-block'})], style={'textAlign': 'center'}),
+            html.Div([dcc.Graph(id = 'team2_touches', figure = {},  style={'display': 'inline-block'})], style={'textAlign': 'center'}),
             html.Div([dcc.Graph(id = 'team1_attacks', figure = {},  style={'display': 'inline-block'})], style={'textAlign': 'center'}),
             html.Div([dcc.Graph(id = 'team2_attacks', figure = {},  style={'display': 'inline-block'})], style={'textAlign': 'center'}),
     ]
