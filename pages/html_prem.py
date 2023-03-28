@@ -16,6 +16,13 @@ import pandas as pd
 from match_data import *
 from htmlmatchlib import *
 from html_prem_div import *
+from plotly_football_pitch import (
+    make_pitch_figure,
+    PitchDimensions,
+    SingleColourBackground,
+    add_heatmap
+)
+
 
 
 dash.register_page(__name__, path='/')
@@ -154,6 +161,7 @@ def update_output(team1, team2, minute):
 def update_output(team1, team2, minute):
         minute *= 60
         df = importing_events(team1, team2)
+        df['Offensiveness'] = np.where(df['Player1 Team'] == team2, -df['Offensiveness'], df['Offensiveness'])
         team_off = df[df['Time'] <= minute]
         fig = px.line(team_off, x="Time", y="Offensiveness", color='Player1 Team')
 
@@ -164,7 +172,9 @@ def update_output(team1, team2, minute):
 
 #ball possession per team
 @callback(
-      Output('team1_ball_poss', 'figure'),
+      [Output('team1_ball_poss', 'figure'),
+       Output('team1_touches', 'figure')
+      ],
       [Input('team1', 'value'),
     Input('team2', 'value'),
      Input('drag', 'value'),]
@@ -201,9 +211,38 @@ def update_output(team1, team2, minute):
             yaxis_range=[-40,40], 
             xaxis_range=[-55, 55]
         )
+        team_pos["X"] += 53
+        team_pos["Y"] += 35
+        x=team_pos['X'].values.tolist()
+        y=team_pos['Y'].values
+        dimensions = PitchDimensions()
+        fig1 = make_pitch_figure(
+            dimensions,
+            pitch_background=SingleColourBackground("#81B622"),
+        )
+
+        # define number of grid squares for heatmap data
+        width_grid = 1
+        length_grid = 2
+        Mx = 53*2
+        My = 35*2
+        data = []
+        for i in range(length_grid):
+               l = []
+               for j in range(width_grid):
+                      k = i * Mx/length_grid
+                      k_prev = (i-1) * Mx/length_grid
+                      p = j * My/width_grid
+                      p_prev = (j-1) * My/width_grid
+                      l.append(len(team_pos[(team_pos['X'] <= Mx/length_grid + k) & (team_pos['X'] > Mx/length_grid + k_prev) &
+                                   (team_pos['Y'] <= My/width_grid + p) & (team_pos['Y'] > My/width_grid + p_prev)]))
+                      
+               data.append(l)
+        fig1.add_trace(go.Scatter(x = x, y = y, mode='markers', marker_color = 'blue' ))
+        fig1 = add_heatmap(fig1, np.array(data))
 
         
-        return fig
+        return fig, fig1
 
 
 
@@ -236,7 +275,7 @@ def update_output(team1, team2, minute):
                             sizex=55 * 2,
                             sizey=40 * 2,
                             sizing= "stretch",
-                            opacity= 1,
+                            opacity= 0.8,
                             layer= "below"))
         fig.update_layout(
             title=title,
