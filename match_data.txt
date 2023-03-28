@@ -1,1 +1,23 @@
+importing_events(team1, team2) : cette fonction prend en entrée deux équipes et renvoie un DataFrame contenant les événements du match correspondant à ces deux équipes.
+
+Nb_Pass_succ(team) : cette fonction prend en entrée une équipe et renvoie le nombre de passes réussies de cette équipe.
+
+Nb_Pass_miss(team) : cette fonction prend en entrée une équipe et renvoie le nombre de passes ratées de cette équipe.
+
+Pass(team) : cette fonction prend en entrée une équipe et renvoie un tuple contenant le nombre total de passes effectuées par cette équipe, le nombre de passes réussies et le nombre de passes ratées.
+
+offensiveness(Team1, Team2) : cette fonction prend en entrée deux équipes et renvoie deux DataFrames contenant l'offensivité de chaque joueur de chaque équipe.
+
+match_stats(Team1, Team2, minutes) : cette fonction prend en entrée deux équipes et la durée du match en minutes, et renvoie différentes statistiques du match telles que le nombre de buts marqués, le nombre de tirs au but, le nombre de cartons rouges et jaunes, le nombre de passes effectuées, etc.
+
+importing_events(team1, team2): une fonction qui prend deux noms d'équipes et renvoie un DataFrame pandas contenant tous les événements de jeu impliquant l'une des deux équipes.
+
+get_possession_data(team1, team2, minutes): une fonction qui prend deux noms d'équipes et une durée de match en minutes et renvoie un tuple contenant la possession de chaque équipe en pourcentage à différents moments du match.
+
+get_shots_data(team1, team2, minutes): une fonction qui prend deux noms d'équipes et une durée de match en minutes et renvoie un tuple contenant le nombre de tirs de chaque équipe ainsi que la répartition de ces tirs en termes de position sur le terrain.
+
+côtés_Utilisés(team1, team2, minutes): une fonction qui prend deux noms d'équipes et une durée de match en minutes et renvoie un tuple contenant la répartition des actions de jeu de chaque équipe en termes de position sur le terrain.
+
+Directions_des_tirs(team1, team2, minutes): une fonction qui prend deux noms d'équipes et une durée de match en minutes et renvoie un tuple contenant la répartition des tirs de chaque équipe en termes de direction sur le terrain.
+
 
