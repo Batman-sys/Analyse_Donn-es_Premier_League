@@ -1,23 +1,36 @@
 importing_events(team1, team2) : cette fonction prend en entrée deux équipes et renvoie un DataFrame contenant les événements du match correspondant à ces deux équipes.
 
-Nb_Pass_succ(team) : cette fonction prend en entrée une équipe et renvoie le nombre de passes réussies de cette équipe.
+xG_Score(df, team1, team2) : prend en entrée un dataframe "df" et deux équipes team1, team2 et retourne deux figures affichant les courbes d'Expected Goals Score.
 
-Nb_Pass_miss(team) : cette fonction prend en entrée une équipe et renvoie le nombre de passes ratées de cette équipe.
+Offensiveness(df, team1, team2) : prend en entrée un dataframe "df" et deux équipes team1, team2 et retourne deux figures affichant affichant les courbes d'Offensiveness pour chaque équipe en fonction du temps.
 
-Pass(team) : cette fonction prend en entrée une équipe et renvoie un tuple contenant le nombre total de passes effectuées par cette équipe, le nombre de passes réussies et le nombre de passes ratées.
+Nb_Pass_succ(df, team1, team2) : prend deux équipes et un dataframe comme arguments. Elle compte le nombre de passes réussies entre les joueurs d'une même équipe et retourne le nombre pour chacune des deux équipes.
 
-offensiveness(Team1, Team2) : cette fonction prend en entrée deux équipes et renvoie deux DataFrames contenant l'offensivité de chaque joueur de chaque équipe.
+Nb_Pass_miss(df, team1, team2) : prend deux équipes et un dataframe comme arguments. Elle compte le nombre de passes manquées entre les joueurs d'une même équipe et retourne le nombre pour chacune des deux équipes.
+
+Pass(df, team1, team2) : prend deux équipes et un dataframe comme arguments. Elle utilise les deux fonctions précédentes pour calculer le nombre total de passes, le nombre de passes réussies et le nombre de passes manquées pour chaque équipe, et retourne ces informations sous forme de tuples.
 
 match_stats(Team1, Team2, minutes) : cette fonction prend en entrée deux équipes et la durée du match en minutes, et renvoie différentes statistiques du match telles que le nombre de buts marqués, le nombre de tirs au but, le nombre de cartons rouges et jaunes, le nombre de passes effectuées, etc.
 
-importing_events(team1, team2): une fonction qui prend deux noms d'équipes et renvoie un DataFrame pandas contenant tous les événements de jeu impliquant l'une des deux équipes.
+sides_used(df, team1, team2, minutes) : prend en entrée un DataFrame "df", deux noms d'équipes team1 et team2, et un entier minutes. Elle calcule ensuite la proportion d'actions effectuées par chaque équipe sur les trois parties du terrain (gauche, milieu, droite), en fonction du temps écoulé minutes. La fonction retourne deux tuples, où chaque tuple représente les proportions pour chaque partie du terrain pour une équipe. Le premier tuple représente les proportions pour l'équipe team1 et le second tuple représente les proportions pour l'équipe team2.
 
-get_possession_data(team1, team2, minutes): une fonction qui prend deux noms d'équipes et une durée de match en minutes et renvoie un tuple contenant la possession de chaque équipe en pourcentage à différents moments du match.
+Directions_of_shots(df, team1, team2, minutes) : une fonction en entrée un DataFrame "df", deux noms d'équipes "team1" et "team2", ainsi qu'une durée "minutes". Et renvoie un tuple contenant la répartition des tirs de chaque équipe en termes de direction sur le terrain. 
 
-get_shots_data(team1, team2, minutes): une fonction qui prend deux noms d'équipes et une durée de match en minutes et renvoie un tuple contenant le nombre de tirs de chaque équipe ainsi que la répartition de ces tirs en termes de position sur le terrain.
+Shooting_zones(df, team1, team2, minutes) : une fonction en entrée, "df" qui est un dataframe, "team1" et "team2" les noms des équipes, et "minutes" le temps en minutes.
+La fonction calcule ensuite les tirs effectués par chaque équipe dans différentes zones. Les zones de tirs sont définies comme suit : la surface de réparation, la zone située à l'extérieur de la surface de réparation mais à l'intérieur de la moitié de terrain, et la zone située à l'extérieur de la moitié de terrain.
 
-côtés_Utilisés(team1, team2, minutes): une fonction qui prend deux noms d'équipes et une durée de match en minutes et renvoie un tuple contenant la répartition des actions de jeu de chaque équipe en termes de position sur le terrain.
+Action_areas(df, team1, team2, minutes) : La fonction calcule la répartition des actions dans les trois zones du terrain (tiers gauche, milieu et tiers droit) pour les deux équipes "team1" et "team2" jusqu'au moment "minutes".
+Elle retourne un tuple de trois chaînes de caractères représentant le pourcentage des actions dans chaque zone pour "team1" et "team2".
 
-Directions_des_tirs(team1, team2, minutes): une fonction qui prend deux noms d'équipes et une durée de match en minutes et renvoie un tuple contenant la répartition des tirs de chaque équipe en termes de direction sur le terrain.
+plot_cotes_utilises(df, team1, team2, minutes) : Elle utilise la fonction "sides_used" pour obtenir les données des côtés utilisés pour chaque équipe, et crée un graphique à barres pour les représenter. La figure affiche les côtés utilisés par chaque équipe
+
+draw_team_pass(df_events, team, minutes) : La figure est créée en utilisant une image d'un terrain de football de base qui est ajoutée comme arrière-plan à l'aide de la méthode add_layout_image(). Pour chaque passe effectuée, un objet flèche est créé en utilisant la méthode layout.Annotation() et ajouté à une liste l. La figure est ensuite mise à jour avec les annotations de cette liste.
+
+heatmap(df, team1, team2, minutes) : Cette fonction prend en entrée un DataFrame df ainsi que les noms de deux équipes team1 et team2 et le nombre de minutes à analyser. Elle crée une carte de chaleur montrant où les passes ont été effectuées par l'équipe 1 sur le terrain.
+Le terrain est divisé en une grille de carrés de largeur width_grid par longueur length_grid, et le nombre de passes effectuées par l'équipe 1 dans chaque carré est compté et utilisé pour créer la carte de chaleur.
+
+
+
+
 
 
