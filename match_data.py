@@ -338,7 +338,7 @@ def draw_team_pass(df_events, team, minutes):
             font=dict(
                 family="Courier New, monospace",
                 size=12,
-                color="RebeccaPurple"
+                color="RebeccaPurple" 
             ),
             xaxis = dict(showgrid=False), 
             yaxis = dict(showgrid = False), 
