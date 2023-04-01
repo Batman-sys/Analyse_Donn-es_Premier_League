@@ -434,4 +434,4 @@ def heatmap(df, team1, team2, minutes):
     fig = add_heatmap(fig, data)
     return fig
   
-  
+     
