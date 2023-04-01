@@ -432,6 +432,6 @@ def heatmap(df, team1, team2, minutes):
         for j in range(width_grid)
     ])
     fig = add_heatmap(fig, data)
-    return fig.show()
+    return fig
   
   
