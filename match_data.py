@@ -159,6 +159,7 @@ def sides_used(df, team1, team2, minutes):
     return (left_side1, middle1, right_side1), (left_side2, middle2, right_side2)
             
 
+# AFFICHAGE CÔTÉS UTILISÉS
     
 def plot_sides_used(df, team1, team2, minutes):
     # Obtenir les données des côtés utilisés pour chaque équipe
