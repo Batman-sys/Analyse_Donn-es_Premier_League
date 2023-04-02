@@ -132,8 +132,8 @@ def match_stats(df, Team1, Team2, minutes):
     return goal_team1, goal_team2, shot_team1,shot_team2,redCard_team1, redCard_team2, yellowCard_team1, yellowCard_team2, pass_team1, pass_team2,foul_team1, foul_team2,offSide_team1, offSide_team2,corners_team1, corners_team2, possession_team1, possession_team2
 
 
-# partie du terrain correspondant à l'équipe adverse découpé en 3 parties ( sur la longueur )
-# cotés utilisés.
+
+# CÔTÉS UTILISÉS
 
 def sides_used(df, team1, team2, minutes):
     df.X = (-1)**df.Half*df.X
@@ -177,7 +177,7 @@ def plot_sides_used(df, team1, team2, minutes):
   
   
   
-# partie du terrain correspondant à l'équipe adverse découpé en 3 parties ( sur la longueur )
+# DIRECTION DES TIRS
 
 def Directions_of_shots(df, team1, team2, minutes):
    
@@ -217,41 +217,89 @@ def Directions_of_shots(df, team1, team2, minutes):
     
     
     
-# partie du terrain correspondant à l'équipe adverse 
-# a corriger
+# ZONES DES TIRS
 def Shooting_zones(df, team1, team2, minutes):
-    #df = importing_events(team1, team2)
-    total1 = len(df[ ( df["Player1 Team"] == team1 ) & (df["Time"] < minutes) & (df["X"] > 0) & ((df["Event Name"] == "Shot") | (df["Event Name"] == "Direct Free Kick Cross"))])
-    total2 = len(df[ ( df["Player1 Team"] == team2 ) & (df["Time"] < minutes) & (df["X"] < 0) & ((df["Event Name"] == "Shot") | (df["Event Name"] == "Direct Free Kick Cross"))])
-    #print(total1, total2)
     
-    six_meters1 = len(df[ ( df["Player1 Team"] == team2 ) & (df["Time"] < minutes) & (df["X"] >= -50) & ( df["Y"] <= 3.5 ) & ( df["Y"] >= -3.5) & ((df["Event Name"] == "Shot") | (df["Event Name"] == "Direct Free Kick Cross"))])
-    six_meters1 = ( six_meters1 / total1 ) * 100
-    eighteen_meters1 = len(df[ ( df["Player1 Team"] == team2 ) & (df["Time"] < minutes) & (df["X"] >= -50) & ( df["Y"] <= -3.5 ) & ( df["Y"] >= -14.5) & ((df["Event Name"] == "Shot") | (df["Event Name"] == "Direct Free Kick Cross"))])
-    eighteen_meters1 += len(df[ ( df["Player1 Team"] == team2 ) & (df["Time"] < minutes) & (df["X"] >= -50) & ( df["Y"] <= 14.5 ) & ( df["Y"] >= 3.5) & ((df["Event Name"] == "Shot") | (df["Event Name"] == "Direct Free Kick Cross"))])
-    eighteen_meters1 += len(df[ ( df["Player1 Team"] == team2 ) & (df["Time"] < minutes) & (df["X"] <= -50) & (df["X"] <= -40) & ( df["Y"] >= -14.5 ) & ( df["Y"] <= 14.5) & ((df["Event Name"] == "Shot") | (df["Event Name"] == "Direct Free Kick Cross"))]) 
-    eighteen_meters1 = ( eighteen_meters1 / total1 ) * 100
-    outside_area1 = len(df[ ( df["Player1 Team"] == team2 ) & (df["Time"] < minutes) & (df["X"] <= -40) & (df["X"] <= 0) & ((df["Event Name"] == "Shot") | (df["Event Name"] == "Direct Free Kick Cross"))])
-    outside_area1 += len(df[ ( df["Player1 Team"] == team2 ) & (df["Time"] < minutes) & (df["X"] >= -40) & ( df["Y"] >= 14.5 ) & ((df["Event Name"] == "Shot") | (df["Event Name"] == "Direct Free Kick Cross"))])
-    outside_area1 += len(df[ ( df["Player1 Team"] == team2 ) & (df["Time"] < minutes) & (df["X"] >= -40) & ( df["Y"] <= -14.5 ) & ((df["Event Name"] == "Shot") | (df["Event Name"] == "Direct Free Kick Cross"))]) 
-    outside_area1 = (outside_area1 / total1) * 100
+    total1 = len(df[ ( df["Player1 Team"] == team1 ) & (df["Time"] < minutes) & (df["Half"] == 0) & (df["X"] < 0) & (df["Event Name"].str.contains("Shot") ) ])
+    total1 += len(df[ ( df["Player1 Team"] == team1 ) & (df["Time"] < minutes) & (df["Half"] == 1) & (df["X"] > 0) & (df["Event Name"].str.contains("Shot") )])
+    total2 = len(df[ ( df["Player1 Team"] == team2 ) & (df["Time"] < minutes) & (df["Half"] == 0) & (df["X"] > 0) & (df["Event Name"].str.contains("Shot") )])
+    total2 += len(df[ ( df["Player1 Team"] == team2 ) & (df["Time"] < minutes) & (df["Half"] == 1) & (df["X"] < 0) & (df["Event Name"].str.contains("Shot") )])
     
-    six_meters2 = len(df[ ( df["Player1 Team"] == team2 ) & (df["Time"] < minutes) & (df["X"] <= -50) & ( df["Y"] <= 3.5 ) & ( df["Y"] >= -3.5) & ((df["Event Name"] == "Shot") | (df["Event Name"] == "Direct Free Kick Cross"))])
-    six_meters2 = ( six_meters2 / total2 ) * 100
-    eighteen_meters2 = len(df[ ( df["Player1 Team"] == team2 ) & (df["Time"] < minutes) & (df["X"] <= -50) & ( df["Y"] <= -3.5 ) & ( df["Y"] >= -14.5) & ((df["Event Name"] == "Shot") | (df["Event Name"] == "Direct Free Kick Cross"))])
-    eighteen_meters2 += len(df[ ( df["Player1 Team"] == team2 ) & (df["Time"] < minutes) & (df["X"] <= -50) & ( df["Y"] <= 14.5 ) & ( df["Y"] >= 3.5) & ((df["Event Name"] == "Shot") | (df["Event Name"] == "Direct Free Kick Cross"))])
-    eighteen_meters2 += len(df[ ( df["Player1 Team"] == team2 ) & (df["Time"] < minutes) & (df["X"] >= -50) & (df["X"] <= -40) & ( df["Y"] >= -14.5 ) & ( df["Y"] <= 14.5) & ((df["Event Name"] == "Shot") | (df["Event Name"] == "Direct Free Kick Cross"))]) 
-    eighteen_meters2 = ( eighteen_meters2 / total2 ) * 100
-    outside_area2 = len(df[ ( df["Player1 Team"] == team2 ) & (df["Time"] < minutes) & (df["X"] >= -40) & (df["X"] <= 0) & ((df["Event Name"] == "Shot") | (df["Event Name"] == "Direct Free Kick Cross"))])
-    outside_area2 += len(df[ ( df["Player1 Team"] == team2 ) & (df["Time"] < minutes) & (df["X"] <= -40) & ( df["Y"] >= 14.5 ) & ((df["Event Name"] == "Shot") | (df["Event Name"] == "Direct Free Kick Cross"))])
-    outside_area2 += len(df[ ( df["Player1 Team"] == team2 ) & (df["Time"] < minutes) & (df["X"] <= -40) & ( df["Y"] <= -14.5 ) & ((df["Event Name"] == "Shot") | (df["Event Name"] == "Direct Free Kick Cross"))]) 
-    outside_area2 = (outside_area2 / total2) * 100
+    six_meters1 = 0
+    eighteen_meters1 = 0
+    outside_area1 = 0
+    six_meters2 = 0
+    eighteen_meters2 = 0
+    outside_area2 = 0
     
-    return ( str(six_meters1) + "%", str(eighteen_meters1) + "%", str(outside_area1) + "%"),( str(six_meters2) + "%", str(eighteen_meters2) + "%", str(outside_area2) + "%") 
+    if total1 == 0 and total2 == 0:
+        return (0.0, 0.0, 0.0), (0.0, 0.0, 0.0)
+    if total1 == 0:
+        total1 = 1
+        six_meters1 = 0
+        eighteen_meters1 = 0
+        outside_area1 = 0
+    if total2 == 0:
+        total2 = 1
+        six_meters2 = 0
+        eighteen_meters2 = 0
+        outside_area2 = 0
+       
+    
+    six_meters1 = len(df[ ( df["Player1 Team"] == team1 ) & (df["Time"] < minutes) & (df["Half"] == 0) & (df["X"] <= 50) & ( df["Y"] < 7 ) & ( df["Y"] > -7) & (df["Event Name"].str.contains("Shot") )])
+    six_meters1 += len(df[ ( df["Player1 Team"] == team1 ) & (df["Time"] < minutes) & (df["Half"] == 1) & (df["X"] >= 50) & ( df["Y"] < 7) & ( df["Y"] > -7) & (df["Event Name"].str.contains("Shot") )])
+
+        
+    eighteen_meters1 = len(df[ ( df["Player1 Team"] == team1 ) & (df["Time"] < minutes) & (df["Half"] == 0) & (df["X"] <= 42) & (df["Y"] < 14) & (df["Y"] > -14) & (df["Event Name"].str.contains("Shot") )])
+    eighteen_meters1 += len(df[ ( df["Player1 Team"] == team1 ) & (df["Time"] < minutes) & (df["Half"] == 1) & (df["X"] >= 42) & (df["Y"] < 14) & (df["Y"] > -14) & (df["Event Name"].str.contains("Shot") )])
+    eighteen_meters1 -= six_meters1
+
+    outside_area1 = total1 - ( eighteen_meters1 + six_meters1 )
+
+    
+    six_meters1 = np.where(total1 > 0, six_meters1 / total1, 0) * 100
+    eighteen_meters1 = np.where(total1 > 0, eighteen_meters1 / total1 , 0) * 100
+    outside_area1 = np.where(total1 > 0, outside_area1 / total1 , 0) * 100
+        
+    six_meters2 = len(df[ ( df["Player1 Team"] == team2 ) & (df["Time"] < minutes) & (df["Half"] == 0) & (df["X"] >= -50) & ( df["Y"] < 7 ) & ( df["Y"] > -7) & (df["Event Name"].str.contains("Shot") )])
+    six_meters2 += len(df[ ( df["Player1 Team"] == team2 ) & (df["Time"] < minutes) & (df["Half"] == 1) & (df["X"] >= 50) & ( df["Y"] < 7 ) & ( df["Y"] > -7) & (df["Event Name"].str.contains("Shot") )])
+
+    eighteen_meters2 = len(df[ ( df["Player1 Team"] == team2 ) & (df["Time"] < minutes) & (df["Half"] == 0) & (df["X"] <= 42) & (df["Y"] < 14) & (df["Y"] > -14) & (df["Event Name"].str.contains("Shot") )])
+    eighteen_meters2 += len(df[ ( df["Player1 Team"] == team2 ) & (df["Time"] < minutes) & (df["Half"] == 1) & (df["X"] >= - 42) & (df["Y"] < 14) & (df["Y"] > -14)  & (df["Event Name"].str.contains("Shot") )])
+    eighteen_meters2 -= six_meters2
+    
+    
+    outside_area2 = total2 - ( eighteen_meters2 + six_meters2 )
+    
+    
+    six_meters2 = np.where(total2 > 0, six_meters2 / total2, 0) * 100
+    eighteen_meters2 = np.where(total2 > 0, eighteen_meters2 / total2 , 0) * 100
+    outside_area2 = np.where(total2 > 0, outside_area2 / total2 , 0) * 100
+    
+    return (six_meters1, eighteen_meters1, outside_area1) , (six_meters2,eighteen_meters2,outside_area2) 
+    
+
+# AFFICHAGE ZONES DE TIRS.
+def plot_shooting_zones(df, team1, team2, minutes):
+    # Obtenir les données des côtés utilisés pour chaque équipe
+    team_shot1, team_shot2 = Shooting_zones(df, team1, team2, minutes)
+
+    # Créer les traces pour chaque équipe
+    trace1 = go.Bar(x=['6 mètres', '18 mètres', 'Extérieur de la surface'], y = team_shot1, name = team1)
+    trace2 = go.Bar(x=['6 mètres', '18 mètres', 'Extérieur de la surface'], y = team_shot2, name = team2)
+
+    # Créer la figure et l'afficher
+    fig = go.Figure(data=[trace1, trace2])
+    fig.update_layout(title=f'Zones de tirs des équipes : {team1} et {team2} pendant les premières {minutes/60} minutes ', barmode='group')
+    return fig
     
     
     
-# partie du terrain découpé en 3 parties (largeur) : Tiers_gauche, Milieu, Tiers_droit
+    
+    
+    
+    
+# ZONES D'ACTION : Tiers_gauche, Milieu, Tiers_droit
 
 def Action_areas(df, team1, team2, minutes):
     dfr = df.copy()
@@ -269,10 +317,11 @@ def Action_areas(df, team1, team2, minutes):
     return [ [math.ceil(Tiers_gauche) ,math.ceil(Milieu) ,math.ceil(Tiers_droit)] ]
     
 
+# AFFICHAGE ZONES D'ACTION
 def heatmap_action_venues(df, team1, team2, minutes):
     dfr = cp.copy(df)
     minutes *= 60
-    title = str(team2) + " touch locations"
+    title = str(team2) + " Touch locations"
     dfr['X']+= 52
     dfr['Y']+= 34
     data = Action_areas(df, team1, team2, minutes)
@@ -299,6 +348,7 @@ def heatmap_action_venues(df, team1, team2, minutes):
 
 
 
+# AFFICHAGE DIRECTION DES PASSES
 def draw_team_pass(df_events, team, minutes):
         title = str(team) + " pass locations"
         d = df_events.loc[(df_events['Player1 Team']==team)&(df_events['Event Name']=='Pass'),['X','Y']]
@@ -359,6 +409,8 @@ def draw_team_pass(df_events, team, minutes):
         return fig
         
 
+        
+# AFFICHAGE XG ET BUTS        
 def plot_xG_goal(df, team1, team2, minutes):
     #df = importing_events(team1, team2)
     print(df.columns)
@@ -381,7 +433,8 @@ def plot_xG_goal(df, team1, team2, minutes):
     return fig
         
     
-    
+
+# AFFICHAGE HEATMAP TOUCH
 def touches(df, team1, team2, minute):
         minute *= 60
         title = str(team2) + " touch locations"
@@ -410,8 +463,10 @@ def touches(df, team1, team2, minute):
         
 
         return fig
+
       
-      
+   
+# AFFICHAGE ZONE DE CHALEUR ( POSITION MOYENNE )      
 def heatmap(df, team1, team2, minutes):
     df = df.copy()
     df["X"] += 55
