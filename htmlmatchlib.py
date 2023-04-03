@@ -15,8 +15,8 @@ import pandas as pd
 from match_data import *
 
 
-def statistics(team1, team2, minute):
-    stats = match_stats(team1, team2, minute)
+def statistics(df, team1, team2, minute):
+    stats = match_stats(df, team1, team2, minute)
     Goals = str(stats[0]) + "  Goals  " + str(stats[1])
     Shots = str(stats[2]) + "  Shots  " + str(stats[3])
     Passes = str(stats[8]) + "  Passes  " + str(stats[9])

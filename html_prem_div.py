@@ -116,10 +116,10 @@ def graphs():
     
 
     
-    return [html.Div([dcc.Graph(id = 'team1_ball_poss', figure = {},  style={'display': 'inline-block'})], style={'textAlign': 'center'}),
-            html.Div([dcc.Graph(id = 'team2_ball_poss', figure = {},  style={'display': 'inline-block'})], style={'textAlign': 'center'}),
-            html.Div([dcc.Graph(id = 'team1_touches', figure = {},  style={'display': 'inline-block'})], style={'textAlign': 'center'}),
-            html.Div([dcc.Graph(id = 'team2_touches', figure = {},  style={'display': 'inline-block'})], style={'textAlign': 'center'}),
-            html.Div([dcc.Graph(id = 'team1_attacks', figure = {},  style={'display': 'inline-block'})], style={'textAlign': 'center'}),
-            html.Div([dcc.Graph(id = 'team2_attacks', figure = {},  style={'display': 'inline-block'})], style={'textAlign': 'center'}),
+    return [html.Div([dcc.Graph(id = 'shooting_zones', figure = {},  style={'display': 'inline-block'})], style={'textAlign': 'center'}),
+            html.Div([dcc.Graph(id = 'action_venues', figure = {},  style={'display': 'inline-block'})], style={'textAlign': 'center'}),
+            html.Div([dcc.Graph(id = 'xG_Goal', figure = {},  style={'display': 'inline-block'})], style={'textAlign': 'center'}),
+            html.Div([dcc.Graph(id = 'team_shots', figure = {},  style={'display': 'inline-block'})], style={'textAlign': 'center'}),
+            html.Div([dcc.Graph(id = 'heatmap', figure = {},  style={'display': 'inline-block'})], style={'textAlign': 'center'}),
+            html.Div([dcc.Graph(id = 'sides_used', figure = {},  style={'display': 'inline-block'})], style={'textAlign': 'center'}),
     ]
