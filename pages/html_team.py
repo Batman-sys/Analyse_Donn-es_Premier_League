@@ -13,7 +13,7 @@ from dash import html, callback
 from dash.dependencies import Input, Output 
 from dash import Dash, dash_table
 import pandas as pd
-from team import *
+from assets.team import *
 
 
 
@@ -21,7 +21,7 @@ from team import *
 dash.register_page(__name__, path='/Team')
 
 
-names_crests =  pd.read_csv('./teams.csv')
+names_crests =  pd.read_csv('./assets/teams.csv')
 team_list = names_crests['Team A'].values.tolist()
 
 

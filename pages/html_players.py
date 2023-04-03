@@ -1,26 +1,19 @@
 import pandas as pd
-import plotly.express as px
 from plotly.subplots import make_subplots
 import plotly.graph_objects as go
-import matplotlib as plt
-import numpy as np
-import math
 #web
 import dash
 from dash import dcc
-import dash_bootstrap_components as dbc
 from dash import html, callback
-from dash.dependencies import Input, Output 
-from dash import Dash, dash_table
+from dash.dependencies import Input, Output
 import pandas as pd
-import copy as cp
-from players import *
+from assets.players import *
 dash.register_page(__name__, path='/Players')
 
 
-names_crests =  pd.read_csv('./teams.csv')
+names_crests =  pd.read_csv('./assets/teams.csv')
 team_list = names_crests['Team A'].values.tolist()
-players =  pd.read_csv('./player_team&photo.csv')
+players =  pd.read_csv('./assets/player_team&photo.csv')
 
 
 layout = html.Div(className= "Mother_Div",children= [

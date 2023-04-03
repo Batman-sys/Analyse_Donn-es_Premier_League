@@ -1,34 +1,26 @@
 import pandas as pd
 import plotly.express as px
 from plotly.subplots import make_subplots
-import plotly.graph_objects as go
 import numpy as np
 import math
 import copy as cp
 #web
 import dash
 from dash import dcc
-import dash_bootstrap_components as dbc
 from dash import html, callback
-from dash.dependencies import Input, Output 
-from dash import Dash, dash_table
+from dash.dependencies import Input, Output
 import pandas as pd
-from match_data import *
-from htmlmatchlib import *
-from html_prem_div import *
-from plotly_football_pitch import (
-    make_pitch_figure,
-    PitchDimensions,
-    SingleColourBackground,
-    add_heatmap
-)
+from assets.match_data import *
+from assets.htmlmatchlib import *
+from assets.html_prem_div import *
+
 
 
 
 dash.register_page(__name__, path='/')
 
 
-names_crests =  pd.read_csv('./teams.csv')
+names_crests =  pd.read_csv('./assets/teams.csv')
 team_list = names_crests['Team A'].values.tolist()
 
 
