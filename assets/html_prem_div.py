@@ -1,11 +1,6 @@
-import dash
 from dash import html, dcc
 import dash_bootstrap_components as dbc
 import pandas as pd
-import plotly.express as px
-from plotly.subplots import make_subplots
-import plotly.graph_objects as go
-import base64
 
 
 crest = pd.read_csv('./assets/teams.csv')['crest'].values.tolist()

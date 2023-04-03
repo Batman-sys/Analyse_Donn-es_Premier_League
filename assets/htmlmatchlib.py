@@ -12,7 +12,7 @@ from dash import html
 from dash.dependencies import Input, Output 
 from dash import Dash, dash_table
 import pandas as pd
-from match_data import *
+from assets.match_data import *
 
 
 def statistics(df, team1, team2, minute):
