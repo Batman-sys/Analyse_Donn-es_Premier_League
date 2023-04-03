@@ -468,13 +468,18 @@ def touches(df, team1, team2, minute):
       
    
 # AFFICHAGE ZONE DE CHALEUR ( POSITION MOYENNE )      
-def heatmap(df, team1, team2, minutes):
+   # AFFICHAGE ZONE DE CHALEUR ( POSITION MOYENNE )      
+def heatmap(df, team1,team2, minutes):
     df = df.copy()
-    df["X"] += 55
-    df["Y"] += 40
+    df["X"] += 52.5
+    df["Y"] += 34
     
     dimensions = PitchDimensions()
-    fig = make_pitch_figure(
+    fig1 = make_pitch_figure(
+    dimensions,
+    pitch_background=SingleColourBackground("#81B622"),
+    )
+    fig2 = make_pitch_figure(
     dimensions,
     pitch_background=SingleColourBackground("#81B622"),
     )
@@ -483,11 +488,19 @@ def heatmap(df, team1, team2, minutes):
     width_grid = 10
     length_grid = 10
 
-    data = np.array([
-        [len(df.loc[(df['Player1 Team']=='Manchester United') & (df['Y']<=68/width_grid + 68/width_grid*i ) & (df['Y']>68/width_grid + 68/width_grid*(i-1)) & (df['X']<=105/length_grid + 105/length_grid*j)& (df['X']>105/length_grid + 105/length_grid*(j-1)) ,['X','Y']]) for i in range(length_grid)]
+    data1 = np.array([
+        [len(df.loc[(df['Time']<= minutes) & (df['Player1 Team']==team1) & (df['Y']<=68/width_grid + 68/width_grid*i ) & (df['Y']>68/width_grid + 68/width_grid*(i-1)) & (df['X']<=105/length_grid + 105/length_grid*j)& (df['X']>105/length_grid + 105/length_grid*(j-1)) ,['X','Y']]) for i in range(length_grid)]
         for j in range(width_grid)
     ])
-    fig = add_heatmap(fig, data)
-    return fig
-  
-      
+    
+    data2 = np.array([
+        [len(df.loc[(df['Time']<= minutes) & (df['Player1 Team']==team2) & (df['Y']<=68/width_grid + 68/width_grid*i ) & (df['Y']>68/width_grid + 68/width_grid*(i-1)) & (df['X']<=105/length_grid + 105/length_grid*j)& (df['X']>105/length_grid + 105/length_grid*(j-1)) ,['X','Y']]) for i in range(length_grid)]
+        for j in range(width_grid)
+    ])
+    
+    
+    fig1 = add_heatmap(fig1, data1)
+    fig2 = add_heatmap(fig2, data2)
+    
+    
+    return fig1, fig2
