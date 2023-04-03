@@ -412,13 +412,14 @@ def draw_team_pass(df_events, team, minutes):
 
         
 # AFFICHAGE XG ET BUTS        
+       
 def plot_xG_goal(df, team1, team2, minutes):
     #df = importing_events(team1, team2)
     print(df.columns)
     # Obtenir les données des côtés utilisés pour chaque équipe
     #side1, side2 = sides_used(df, team1, team2, minutes)
     x1 = df[(df["Player1 Team"] == team1) & (df["Time"] <= minutes)]["xG Score"].values.sum(), df[ (df["Player1 Team"] == team2) & (df["Time"] <= minutes)]["xG Score"].values.sum()
-    x2 = len(df[ (df["Event Name"] == "Goal") & (df["Player1 Team"] == team1) & (df["Time"] <= minutes)]["Event Name"]), len(df[ (df["Event Name"] == "Goal") & (df["Player1 Team"] == team2) & (df["Time"] <= minutes)]["Event Name"])
+    x2 = len(df[ (df["Time"] < minutes) & ( ((df["Event Name"] == "Goal") & (df["Player1 Team"] == team1)) | ((df["Event Name"] == "Own Goal") & (df["Player1 Team"] == team2)))]), len(df[ (df["Time"] < minutes) & ( ((df["Event Name"] == "Goal") & (df["Player1 Team"] == team2)) | ((df["Event Name"] == "Own Goal") & (df["Player1 Team"] == team1)))])
     print(x1)
     print(df.columns)
 
@@ -432,6 +433,7 @@ def plot_xG_goal(df, team1, team2, minutes):
     fig.update_layout(barmode='group')
 
     return fig
+        
         
     
 
@@ -468,7 +470,7 @@ def touches(df, team1, team2, minute):
       
    
 # AFFICHAGE ZONE DE CHALEUR ( POSITION MOYENNE )      
-   # AFFICHAGE ZONE DE CHALEUR ( POSITION MOYENNE )      
+
 def heatmap(df, team1,team2, minutes):
     df = df.copy()
     df["X"] += 52.5
