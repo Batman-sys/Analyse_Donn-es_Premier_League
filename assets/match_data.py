@@ -222,65 +222,135 @@ def Directions_of_shots(df, team1, team2, minutes):
     
     
 # ZONES DES TIRS
+
 def Shooting_zones(df, team1, team2, minutes):
+    
     c = df["Player1 Team"].values[0]
     if team1 != c:
-       team2 = team1
-       team1 = c
-    total1 = len(df[ ( df["Player1 Team"] == team1 ) & (df["Time"] < minutes)  & (df["Event Name"].str.contains("Shot") )])
-    total2 = len(df[ ( df["Player1 Team"] == team2 ) & (df["Time"] < minutes)  & (df["Event Name"].str.contains("Shot") )])
-    six_meters1 = 0
-    eighteen_meters1 = 0
-    outside_area1 = 0
-    six_meters2 = 0
-    eighteen_meters2 = 0
-    outside_area2 = 0
+        team2 = team1
+        team1 = c
+        
+    e = df[ ( df["Player1 Team"] == team1 ) & ( df["Event Name"] == "Pass" ) ]["X"].values[2]
     
-    if total1 == 0 and total2 == 0:
-        return (0.0, 0.0, 0.0), (0.0, 0.0, 0.0)
-    if total1 == 0:
-        total1 = 1
+    if e < 0:
+        
+        total1 = len(df[ ( df["Player1 Team"] == team1 ) & (df["Time"] < minutes) & (df["Half"] == 0) & (df["X"] > 0) & (df["Event Name"].str.contains("Shot") ) ])
+        total1 += len(df[ ( df["Player1 Team"] == team1 ) & (df["Time"] < minutes) & (df["Half"] == 1) & (df["X"] < 0) & (df["Event Name"].str.contains("Shot") )])
+        total2 = len(df[ ( df["Player1 Team"] == team2 ) & (df["Time"] < minutes) & (df["Half"] == 0) & (df["X"] < 0) & (df["Event Name"].str.contains("Shot") )])
+        total2 += len(df[ ( df["Player1 Team"] == team2 ) & (df["Time"] < minutes) & (df["Half"] == 1) & (df["X"] > 0) & (df["Event Name"].str.contains("Shot") )])
+
         six_meters1 = 0
         eighteen_meters1 = 0
         outside_area1 = 0
-    if total2 == 0:
-        total2 = 1
         six_meters2 = 0
         eighteen_meters2 = 0
         outside_area2 = 0
-       
-    
-    six_meters1 = len(df[ ( df["Player1 Team"] == team1 ) & (df["Time"] < minutes) & (df["Half"] == 0) & (df["X"] <= 50) & ( df["Y"] < 7 ) & ( df["Y"] > -7) & (df["Event Name"].str.contains("Shot") )])
-    six_meters1 += len(df[ ( df["Player1 Team"] == team1 ) & (df["Time"] < minutes) & (df["Half"] == 1) & (df["X"] >= 50) & ( df["Y"] < 7) & ( df["Y"] > -7) & (df["Event Name"].str.contains("Shot") )])
 
+        if total1 == 0 and total2 == 0:
+            return (0.0, 0.0, 0.0), (0.0, 0.0, 0.0)
+        if total1 == 0:
+            total1 = 1
+            six_meters1 = 0
+            eighteen_meters1 = 0
+            outside_area1 = 0
+        if total2 == 0:
+            total2 = 1
+            six_meters2 = 0
+            eighteen_meters2 = 0
+            outside_area2 = 0
+
+
+        six_meters1 = len(df[ ( df["Player1 Team"] == team1 ) & (df["Time"] < minutes) & (df["Half"] == 0) & (df["X"] >= 50) & ( df["Y"] < 7 ) & ( df["Y"] > -7) & (df["Event Name"].str.contains("Shot") )])
+        six_meters1 += len(df[ ( df["Player1 Team"] == team1 ) & (df["Time"] < minutes) & (df["Half"] == 1) & (df["X"] <= -50) & ( df["Y"] < 7) & ( df["Y"] > -7) & (df["Event Name"].str.contains("Shot") )])
+
+
+        eighteen_meters1 = len(df[ ( df["Player1 Team"] == team1 ) & (df["Time"] < minutes) & (df["Half"] == 0) & (df["X"] >= 42) & (df["Y"] < 14) & (df["Y"] > -14) & (df["Event Name"].str.contains("Shot") )])
+        eighteen_meters1 += len(df[ ( df["Player1 Team"] == team1 ) & (df["Time"] < minutes) & (df["Half"] == 1) & (df["X"] <= -42) & (df["Y"] < 14) & (df["Y"] > -14) & (df["Event Name"].str.contains("Shot") )])
+        eighteen_meters1 -= six_meters1
+
+        outside_area1 = total1 - ( eighteen_meters1 + six_meters1 )
+
+
+        six_meters1 = np.where(total1 > 0, six_meters1 / total1, 0) * 100
+        eighteen_meters1 = np.where(total1 > 0, eighteen_meters1 / total1 , 0) * 100
+        outside_area1 = np.where(total1 > 0, outside_area1 / total1 , 0) * 100
+
+        six_meters2 = len(df[ ( df["Player1 Team"] == team2 ) & (df["Time"] < minutes) & (df["Half"] == 0) & (df["X"] <= -50) & ( df["Y"] < 7 ) & ( df["Y"] > -7) & (df["Event Name"].str.contains("Shot") )])
+        six_meters2 += len(df[ ( df["Player1 Team"] == team2 ) & (df["Time"] < minutes) & (df["Half"] == 1) & (df["X"] >= 50) & ( df["Y"] < 7 ) & ( df["Y"] > -7) & (df["Event Name"].str.contains("Shot") )])
+
+        eighteen_meters2 = len(df[ ( df["Player1 Team"] == team2 ) & (df["Time"] < minutes) & (df["Half"] == 0) & (df["X"] <= -42) & (df["Y"] < 14) & (df["Y"] > -14) & (df["Event Name"].str.contains("Shot") )])
+        eighteen_meters2 += len(df[ ( df["Player1 Team"] == team2 ) & (df["Time"] < minutes) & (df["Half"] == 1) & (df["X"] >= 42) & (df["Y"] < 14) & (df["Y"] > -14)  & (df["Event Name"].str.contains("Shot") )])
+        eighteen_meters2 -= six_meters2
+
+
+        outside_area2 = total2 - ( eighteen_meters2 + six_meters2 )
+
+
+        six_meters2 = np.where(total2 > 0, six_meters2 / total2, 0) * 100
+        eighteen_meters2 = np.where(total2 > 0, eighteen_meters2 / total2 , 0) * 100
+        outside_area2 = np.where(total2 > 0, outside_area2 / total2 , 0) * 100
         
-    eighteen_meters1 = len(df[ ( df["Player1 Team"] == team1 ) & (df["Time"] < minutes) & (df["Half"] == 0) & (df["X"] <= 42) & (df["Y"] < 14) & (df["Y"] > -14) & (df["Event Name"].str.contains("Shot") )])
-    eighteen_meters1 += len(df[ ( df["Player1 Team"] == team1 ) & (df["Time"] < minutes) & (df["Half"] == 1) & (df["X"] >= -42) & (df["Y"] < 14) & (df["Y"] > -14) & (df["Event Name"].str.contains("Shot") )])
-    eighteen_meters1 -= six_meters1
-
-    outside_area1 = total1 - ( eighteen_meters1 + six_meters1 )
-
-    
-    six_meters1 = np.where(total1 > 0, six_meters1 / total1, 0) * 100
-    eighteen_meters1 = np.where(total1 > 0, eighteen_meters1 / total1 , 0) * 100
-    outside_area1 = np.where(total1 > 0, outside_area1 / total1 , 0) * 100
+    else:
         
-    six_meters2 = len(df[ ( df["Player1 Team"] == team2 ) & (df["Time"] < minutes) & (df["Half"] == 0) & (df["X"] >= -50) & ( df["Y"] < 7 ) & ( df["Y"] > -7) & (df["Event Name"].str.contains("Shot") )])
-    six_meters2 += len(df[ ( df["Player1 Team"] == team2 ) & (df["Time"] < minutes) & (df["Half"] == 1) & (df["X"] >= 50) & ( df["Y"] < 7 ) & ( df["Y"] > -7) & (df["Event Name"].str.contains("Shot") )])
+        total1 = len(df[ ( df["Player1 Team"] == team1 ) & (df["Time"] < minutes) & (df["Half"] == 0) & (df["X"] < 0) & (df["Event Name"].str.contains("Shot") ) ])
+        total1 += len(df[ ( df["Player1 Team"] == team1 ) & (df["Time"] < minutes) & (df["Half"] == 1) & (df["X"] > 0) & (df["Event Name"].str.contains("Shot") )])
+        total2 = len(df[ ( df["Player1 Team"] == team2 ) & (df["Time"] < minutes) & (df["Half"] == 0) & (df["X"] > 0) & (df["Event Name"].str.contains("Shot") )])
+        total2 += len(df[ ( df["Player1 Team"] == team2 ) & (df["Time"] < minutes) & (df["Half"] == 1) & (df["X"] < 0) & (df["Event Name"].str.contains("Shot") )])
 
-    eighteen_meters2 = len(df[ ( df["Player1 Team"] == team2 ) & (df["Time"] < minutes) & (df["Half"] == 0) & (df["X"] <= 42) & (df["Y"] < 14) & (df["Y"] > -14) & (df["Event Name"].str.contains("Shot") )])
-    eighteen_meters2 += len(df[ ( df["Player1 Team"] == team2 ) & (df["Time"] < minutes) & (df["Half"] == 1) & (df["X"] >= - 42) & (df["Y"] < 14) & (df["Y"] > -14)  & (df["Event Name"].str.contains("Shot") )])
-    eighteen_meters2 -= six_meters2
+
+        six_meters1 = 0
+        eighteen_meters1 = 0
+        outside_area1 = 0
+        six_meters2 = 0
+        eighteen_meters2 = 0
+        outside_area2 = 0
+
+        if total1 == 0 and total2 == 0:
+            return (0.0, 0.0, 0.0), (0.0, 0.0, 0.0)
+        if total1 == 0:
+            total1 = 1
+            six_meters1 = 0
+            eighteen_meters1 = 0
+            outside_area1 = 0
+        if total2 == 0:
+            total2 = 1
+            six_meters2 = 0
+            eighteen_meters2 = 0
+            outside_area2 = 0
+
+
+        six_meters1 = len(df[ ( df["Player1 Team"] == team1 ) & (df["Time"] < minutes) & (df["Half"] == 0) & (df["X"] <= -50) & ( df["Y"] < 7 ) & ( df["Y"] > -7) & (df["Event Name"].str.contains("Shot") )])
+        six_meters1 += len(df[ ( df["Player1 Team"] == team1 ) & (df["Time"] < minutes) & (df["Half"] == 1) & (df["X"] >= 50) & ( df["Y"] < 7) & ( df["Y"] > -7) & (df["Event Name"].str.contains("Shot") )])
+
+
+        eighteen_meters1 = len(df[ ( df["Player1 Team"] == team1 ) & (df["Time"] < minutes) & (df["Half"] == 0) & (df["X"] <= -42) & (df["Y"] < 14) & (df["Y"] > -14) & (df["Event Name"].str.contains("Shot") )])
+        eighteen_meters1 += len(df[ ( df["Player1 Team"] == team1 ) & (df["Time"] < minutes) & (df["Half"] == 1) & (df["X"] >= 42) & (df["Y"] < 14) & (df["Y"] > -14) & (df["Event Name"].str.contains("Shot") )])
+        eighteen_meters1 -= six_meters1
+
+        outside_area1 = total1 - ( eighteen_meters1 + six_meters1 )
+
+
+        six_meters1 = np.where(total1 > 0, six_meters1 / total1, 0) * 100
+        eighteen_meters1 = np.where(total1 > 0, eighteen_meters1 / total1 , 0) * 100
+        outside_area1 = np.where(total1 > 0, outside_area1 / total1 , 0) * 100
+
+        six_meters2 = len(df[ ( df["Player1 Team"] == team2 ) & (df["Time"] < minutes) & (df["Half"] == 0) & (df["X"] >= 50) & ( df["Y"] < 7 ) & ( df["Y"] > -7) & (df["Event Name"].str.contains("Shot") )])
+        six_meters2 += len(df[ ( df["Player1 Team"] == team2 ) & (df["Time"] < minutes) & (df["Half"] == 1) & (df["X"] <= -50) & ( df["Y"] < 7 ) & ( df["Y"] > -7) & (df["Event Name"].str.contains("Shot") )])
+
+        eighteen_meters2 = len(df[ ( df["Player1 Team"] == team2 ) & (df["Time"] < minutes) & (df["Half"] == 0) & (df["X"] >= 42) & (df["Y"] < 14) & (df["Y"] > -14) & (df["Event Name"].str.contains("Shot") )])
+        eighteen_meters2 += len(df[ ( df["Player1 Team"] == team2 ) & (df["Time"] < minutes) & (df["Half"] == 1) & (df["X"] <= -42) & (df["Y"] < 14) & (df["Y"] > -14)  & (df["Event Name"].str.contains("Shot") )])
+        eighteen_meters2 -= six_meters2
+
+
+        outside_area2 = total2 - ( eighteen_meters2 + six_meters2 )
+
+
+        six_meters2 = np.where(total2 > 0, six_meters2 / total2, 0) * 100
+        eighteen_meters2 = np.where(total2 > 0, eighteen_meters2 / total2 , 0) * 100
+        outside_area2 = np.where(total2 > 0, outside_area2 / total2 , 0) * 100
     
+    return (six_meters1, eighteen_meters1, outside_area1) , (six_meters2,eighteen_meters2,outside_area2) 
     
-    outside_area2 = total2 - ( eighteen_meters2 + six_meters2 )
-    
-    
-    six_meters2 = np.where(total2 > 0, six_meters2 / total2, 0) * 100
-    eighteen_meters2 = np.where(total2 > 0, eighteen_meters2 / total2 , 0) * 100
-    outside_area2 = np.where(total2 > 0, outside_area2 / total2 , 0) * 100
-    
-    return team1, team2, (six_meters1, eighteen_meters1, outside_area1) , (six_meters2,eighteen_meters2,outside_area2) 
     
 
 # AFFICHAGE ZONES DE TIRS.
@@ -344,7 +414,7 @@ def heatmap_action_venues(df, team1, team2, minutes):
 
 
 
-# AFFICHAGE DIRECTION DES Tirs
+# AFFICHAGE DIRECTION DES TIRS
 def draw_team_shot(df_events, team, team2, minutes):
         shots = ['Shot','Header Shot','Direct Free Kick Shot','Penalty Shot']
         title = str(team) + " shot locations"
@@ -404,12 +474,15 @@ def draw_team_shot(df_events, team, team2, minutes):
 
         
 # AFFICHAGE XG ET BUTS        
+       
 def plot_xG_goal(df, team1, team2, minutes):
     #df = importing_events(team1, team2)
+    print(df.columns)
     # Obtenir les données des côtés utilisés pour chaque équipe
-    #side1, side2 = sides_used(df, team1, team2, minutes)
     x1 = df[(df["Player1 Team"] == team1) & (df["Time"] <= minutes)]["xG Score"].values.sum(), df[ (df["Player1 Team"] == team2) & (df["Time"] <= minutes)]["xG Score"].values.sum()
-    x2 = len(df[ (df["Event Name"] == "Goal") & (df["Player1 Team"] == team1) & (df["Time"] <= minutes)]["Event Name"]), len(df[ (df["Event Name"] == "Goal") & (df["Player1 Team"] == team2) & (df["Time"] <= minutes)]["Event Name"])
+    x2 = len(df[ (df["Time"] < minutes) & ( ((df["Event Name"] == "Goal") & (df["Player1 Team"] == team1)) | ((df["Event Name"] == "Own Goal") & (df["Player1 Team"] == team2)))]), len(df[ (df["Time"] < minutes) & ( ((df["Event Name"] == "Goal") & (df["Player1 Team"] == team2)) | ((df["Event Name"] == "Own Goal") & (df["Player1 Team"] == team1)))])
+    print(x1)
+    print(df.columns)
 
     # Créer les traces pour chaque équipe
     fig = go.Figure(data=[
@@ -456,15 +529,18 @@ def touches(df, team1, team2, minute):
 
       
    
-# AFFICHAGE ZONE DE CHALEUR ( POSITION MOYENNE )      
-def heatmap(df, team1, team2, minutes):
-    minutes *= 60
+# AFFICHAGE ZONE DE CHALEUR ( POSITION MOYENNE )          
+def heatmap(df, team1,team2, minutes):
     df = df.copy()
     df["X"] += 52.5
     df["Y"] += 34
     
     dimensions = PitchDimensions()
-    fig = make_pitch_figure(
+    fig1 = make_pitch_figure(
+    dimensions,
+    pitch_background=SingleColourBackground("#81B622"),
+    )
+    fig2 = make_pitch_figure(
     dimensions,
     pitch_background=SingleColourBackground("#81B622"),
     )
@@ -473,11 +549,21 @@ def heatmap(df, team1, team2, minutes):
     width_grid = 10
     length_grid = 10
 
-    data = np.array([
-        [len(df.loc[(df['Player1 Team']=='Manchester United') & (df['Y']<=68/width_grid + 68/width_grid*i ) & (df['Y']>68/width_grid + 68/width_grid*(i-1)) & (df['X']<=105/length_grid + 105/length_grid*j)& (df['X']>105/length_grid + 105/length_grid*(j-1)) ,['X','Y']]) for i in range(length_grid)]
+    data1 = np.array([
+        [len(df.loc[(df['Time']<= minutes) & (df['Player1 Team']==team1) & (df['Y']<=68/width_grid + 68/width_grid*i ) & (df['Y']>68/width_grid + 68/width_grid*(i-1)) & (df['X']<=105/length_grid + 105/length_grid*j)& (df['X']>105/length_grid + 105/length_grid*(j-1)) ,['X','Y']]) for i in range(length_grid)]
         for j in range(width_grid)
     ])
-    fig = add_heatmap(fig, data)
-    return fig
+    
+    data2 = np.array([
+        [len(df.loc[(df['Time']<= minutes) & (df['Player1 Team']==team2) & (df['Y']<=68/width_grid + 68/width_grid*i ) & (df['Y']>68/width_grid + 68/width_grid*(i-1)) & (df['X']<=105/length_grid + 105/length_grid*j)& (df['X']>105/length_grid + 105/length_grid*(j-1)) ,['X','Y']]) for i in range(length_grid)]
+        for j in range(width_grid)
+    ])
+    
+    
+    fig1 = add_heatmap(fig1, data1)
+    fig2 = add_heatmap(fig2, data2)
+    
+    
+    return fig1, fig2
   
      
