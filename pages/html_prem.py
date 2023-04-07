@@ -154,18 +154,16 @@ def update_output(team1, team2, minute):
         df['Offensiveness'] = np.where(df['Player1 Team'] == team2, -df['Offensiveness'], df['Offensiveness'])
         team_off = df[df['Time'] <= minute]
         fig = px.line(team_off, x="Time", y="Offensiveness", color='Player1 Team')
-
-        
         return fig
 
 #Graphs
 @callback(
     [
-     Output('shooting_zones', 'figure'),
      Output('action_venues', 'figure'),
      Output('xG_Goal', 'figure'),
      Output('team_shots', 'figure'),
      Output('heatmap', 'figure'),
+     Output('heatmap2', 'figure'),
      Output('sides_used', 'figure')
     ],
     [Input('team1', 'value'),
@@ -174,7 +172,7 @@ def update_output(team1, team2, minute):
 )
 def update_output(team1, team2, minute):
     df = importing_events(team1, team2)
-    return plot_shooting_zones(df, team1, team2, minute), heatmap_action_venues(df, team1, team2, minute), plot_xG_goal(df, team1, team2, minute), draw_team_shot(df, team1, team2, minute), heatmap(df, team1, team2, minute), plot_sides_used(df, team1, team2, minute)
+    return  heatmap_action_venues(df, team1, team2, minute), plot_xG_goal(df, team1, team2, minute), draw_team_shot(df, team1, team2, minute), *heatmap(df, team1, team2, minute), plot_sides_used(df, team1, team2, minute)
        
 
 

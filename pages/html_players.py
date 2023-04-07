@@ -60,6 +60,7 @@ layout = html.Div(className= "Mother_Div",children= [
     [Input('playerteam1', 'value')]
 )
 def update_output(t1):
+
     return [players[players['Team'] == t1]['Player Name'].values.tolist()]
 
 #Update Player Info
@@ -81,10 +82,11 @@ def update_output(p):
      Output('shot_types', 'figure'),
      Output('shot_direction', 'figure')
     ],
-    Input('player', 'value')
+    [Input('player', 'value'),
+    Input('playerteam1', 'value')]
 )
-def update_output(p):
-    df_events = importing_events(p)
+def update_output(p,t):
+    df_events = importing_events(t)
     shots = ['Shot','Header Shot','Direct Free Kick Shot','Penalty Shot']
     d=len(df_events.loc[(df_events['Player1 Name']==p)&(df_events['Event Name'].isin(shots))])
     g = eventOfPlayerPerSeason(p,'Goal', df_events)
@@ -110,10 +112,11 @@ def update_output(p):
      Output('pass_per_assist', 'figure'),
      Output('pass_direction', 'figure')
     ],
-    Input('player', 'value')
+    [Input('player', 'value'),
+    Input('playerteam1', 'value')]
 )
-def update_output(p):
-    df_events = importing_events(p)
+def update_output(p,t):
+    df_events = importing_events(t)
     pa = decisive_pass_season(p, df_events)
     p_total = len(df_events.loc[(df_events["Player1 Name"]== p)&(df_events['Event Name']=='Pass')])
     succ = succPassPerSeason(p,df_events)
@@ -151,17 +154,18 @@ def update_output(p):
      Output('saves_per_goal', 'figure'),
      Output('yellow_red', 'figure')
     ],
-    Input('player', 'value')
+    [Input('player', 'value'),
+    Input('playerteam1', 'value')]
 )
-def update_output(p):
-    df_events = importing_events(p)
+def update_output(p,t):
+    df_events = importing_events(t)
     team = (df_events[(df_events['Player1 Name'] == p)]['Player1 Team'].values)[0]
-    t = (eventOfPlayerPerSeason(p,'Tackle', df_events)), (eventOfPlayerPerSeason(p,'Block', df_events)), (eventOfPlayerPerSeason(p,'Foul', df_events))
+    t = (oppositeeventOfPlayerPerSeason(p,'Tackle', df_events)), (eventOfPlayerPerSeason(p,'Block', df_events)), (oppositeeventOfPlayerPerSeason(p,'Foul', df_events)),(eventOfPlayerPerSeason(p,'Clearance', df_events))
     s = (eventOfPlayerPerSeason(p,'Goalkeeper Save', df_events)) + (eventOfPlayerPerSeason(p,'Goalkeeper Save Catch', df_events)) , len((df_events[((df_events['Player1 Team'] != team) & (df_events['Event Name'] == 'Goal')) | ((df_events['Player1 Team'] == team) & (df_events['Event Name'] == 'Own Goal'))]))
     yr = (eventOfPlayerPerSeason(p,'Yellow Card', df_events)), (eventOfPlayerPerSeason(p,'Red Card', df_events))
     fig = go.Figure(   
             go.Bar(
-                x = ['Tackle', 'Block', 'Foul'],
+                x = ['Tackle', 'Block', 'Foul', 'Clearance'],
                 y = t
                 )
             )
